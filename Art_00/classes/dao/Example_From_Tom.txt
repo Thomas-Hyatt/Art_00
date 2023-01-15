@@ -1,0 +1,19 @@
+        public async Task<string> GetAsync()
+        {
+            var connString = "Host=localhost:5432;Username=postgres;Password=postgres1;Database=catcards";
+
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+
+
+            // Retrieve all rows
+            await using (var cmd = new NpgsqlCommand("SELECT fact FROM catcards", conn))
+            await using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                    return reader.GetString(0);
+            }
+            return "hello";
+        }
+
+https://www.npgsql.org/doc/basic-usage.html
