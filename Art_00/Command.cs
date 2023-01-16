@@ -66,9 +66,9 @@ namespace Art_00
                                     isPasswordValid = handler.checkIsPasswordValid(registrationPasswordInput);
 
                                     if (isPasswordValid) 
-                                    { 
+                                    {
 
-
+                                        handler.SaveUser();
                                         // UI.display success
                                     }
                                 }

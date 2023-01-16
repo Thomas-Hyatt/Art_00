@@ -154,6 +154,13 @@ namespace Art_00
             return isPasswordValid;
         }
 
+        public void SaveUser()
+        {
+            User user = new User();
+            var task = userDao.PostUser(user);
+            User newUser = task.WaitAndUnwrapException();
+        }
+
 
     }
 }

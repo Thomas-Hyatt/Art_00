@@ -51,7 +51,7 @@ namespace Art_00.classes.dao
                     {
                         while (await reader.ReadAsync())
                         {
-                            User user = readUser(reader);
+                            User user = ReadUser(reader);
                             allUsers.Add(user);
                         }
                     }
@@ -76,7 +76,7 @@ namespace Art_00.classes.dao
          * @param  User - The user to be created. This User object does not have its userId.
          * @return User - The newly created user, has its userId.
          */
-        async System.Threading.Tasks.Task<User> postUser(User userToBeAdded)
+        public async System.Threading.Tasks.Task<User> PostUser(User userToBeAdded)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace Art_00.classes.dao
                 {
                     // Retrieve all rows
                     await using var cmd = new NpgsqlCommand("INSERT INTO users (position_id, username, password_hash, salt) " +
-                                                             "VALUES (@p1), (@p2), (@p3), (@p4) RETURNING *", conn)
+                                                            "VALUES (@p1, @p2, @p3, @p4) RETURNING *", conn)
                     {
                         Parameters =
                         {
@@ -122,7 +122,7 @@ namespace Art_00.classes.dao
          * @param  none
          * @return User - A User object that contains information about the user's id, position, and username
          */
-        public User readUser(NpgsqlDataReader reader)
+        public User ReadUser(NpgsqlDataReader reader)
         {
             int userId = reader.GetInt32(0);
             string position = "";
